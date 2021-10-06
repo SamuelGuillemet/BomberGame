@@ -1,0 +1,12 @@
+difficulty=1550.1896
+sounds=false
+music=false
+showFPS=false
+Player1.Color=139.0
+Player2.Color=146.0
+Player1.name=Sam
+Player2.name=Samuel
+Player1.length=3
+Player2.length=6
+IPprefered=192.168.1.42
+IPpreferedLength=12
