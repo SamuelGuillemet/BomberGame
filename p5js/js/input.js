@@ -20,7 +20,7 @@ function keyPressed() {
           if (keyCode === LEFT_ARROW) Player2.move(-largeurCase, 0);
           if (keyCode === UP_ARROW) Player2.move(0, -largeurCase);
           if (keyCode === DOWN_ARROW) Player2.move(0, largeurCase);
-          if (key === '0') Player2.PosBomb();
+          if (key === '0' || keyCode === SHIFT || keyCode === CONTROL || keyCode === ENTER) Player2.PosBomb();
         }
       }
       break;
