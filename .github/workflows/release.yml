@@ -24,18 +24,14 @@ jobs:
           # Download the new .zip asset format instead of .tgz
           gh release download --repo processing/processing4 --pattern "*linux-x64-portable.zip" --dir "$RUNNER_TEMP"
           
-          # Create extraction and target directories
-          mkdir -p "$RUNNER_TEMP/extracted"
           mkdir -p "$HOME/processing"
-          
-          # Unzip the files
-          unzip -q "$RUNNER_TEMP/processing-*-linux-x64-portable.zip" -d "$RUNNER_TEMP/extracted"
-          
-          # Replicate the --strip-components=1 behavior by moving contents out of the nested folder
-          mv "$RUNNER_TEMP/extracted/processing-"*/* "$HOME/processing/"
-          
-          # Add to system path
-          echo "$HOME/processing" >> "$GITHUB_PATH"
+          unzip -q "$RUNNER_TEMP"/*linux-x64-portable.zip -d "$HOME/processing"
+
+          # The archive layout varies: locate the launcher instead of assuming a folder name.
+          CLI="$(find "$HOME/processing" -type f \( -name processing-java -o -name processing \) -perm -u+x | head -n 1)"
+          test -n "$CLI" || { echo "No Processing launcher found:"; find "$HOME/processing" -maxdepth 3; exit 1; }
+          echo "Found $CLI"
+          echo "$(dirname "$CLI")" >> "$GITHUB_PATH"
 
       - name: Install Pathfinder library
         run: |
