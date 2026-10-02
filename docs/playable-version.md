@@ -12,20 +12,20 @@ When a version tag is pushed (`git tag v1.0.0 && git push origin v1.0.0`), the w
 1. Open the repository **Releases** page and download the zip.
 2. Unzip it and run `BomberGame-linux/BomberGame` (Linux).
 
-One-time setup for maintainers:
+Notes for maintainers:
 
-- Add a repository variable `PATHFINDER_ZIP_URL` (Settings > Secrets and variables > Actions > Variables)
-  pointing to the zip of the *Pathfinder* library (the download link shown in the Processing Contribution Manager).
-- `Actions` > `Build playable version` > `Run workflow` also builds a test artifact without creating a release.
-
-Status: this workflow could not be run from the authoring environment. Check the first run and adjust the
-Processing download pattern or library path if the job fails. Windows and macOS builds are not produced by CI;
-use option 3 on those systems.
+- The job installs the latest Processing 4, the *Sound* library (v2.4.0 from GitHub) and *Pathfinder* V1.0.1
+  (from [SourceForge](https://sourceforge.net/projects/pathfinder4processing/)).
+- `Actions` > `Build playable version` > `Run workflow` builds a test artifact without creating a release.
+- The same steps were reproduced locally and produced a working `BomberGame-linux.zip` (about 500 MB).
+- Windows and macOS builds are not produced by CI; use option 3 on those systems.
 
 ## Option 2: run from the Processing IDE
 
 1. Install [Processing 4](https://processing.org/download).
-2. Install the libraries *Sound* and *Pathfinder* (Sketch > Import Library > Manage Libraries).
+2. Install the *Sound* library (Sketch > Import Library > Manage Libraries) and *Pathfinder*, which is not in the
+   Library Manager: download it from [SourceForge](https://sourceforge.net/projects/pathfinder4processing/)
+   and unzip it into your sketchbook `libraries/` folder.
 3. Open `BomberGame.pde` (the folder must be named `BomberGame`) and press **Run**.
 
 Details and troubleshooting: [dev-setup.md](dev-setup.md).

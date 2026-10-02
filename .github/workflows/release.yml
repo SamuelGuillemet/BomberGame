@@ -1,7 +1,6 @@
 name: Build playable version
 
 # Builds the Linux application and attaches it to a GitHub Release when a tag `v*` is pushed.
-# Required repository variable: PATHFINDER_ZIP_URL (direct link to the Pathfinder library zip).
 on:
   push:
     tags: ["v*"]
@@ -15,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ github.token }}
-      PATHFINDER_ZIP_URL: ${{ vars.PATHFINDER_ZIP_URL }}
+      PATHFINDER_ZIP_URL: https://sourceforge.net/projects/pathfinder4processing/files/Path_Finder%20V1.0.1.zip/download
     steps:
       - uses: actions/checkout@v4
 
@@ -28,14 +27,20 @@ jobs:
           unzip -q "$RUNNER_TEMP"/*linux-x64-portable.zip -d "$HOME/processing"
 
           # The archive layout varies: locate the launcher instead of assuming a folder name.
-          CLI="$(find "$HOME/processing" -type f \( -name processing-java -o -name processing \) -perm -u+x | head -n 1)"
+          CLI="$(find "$HOME/processing" -type f \( -name processing-java -o -name Processing \) -path '*/bin/*' | head -n 1)"
           test -n "$CLI" || { echo "No Processing launcher found:"; find "$HOME/processing" -maxdepth 3; exit 1; }
+          chmod +x "$CLI"
           echo "Found $CLI"
           echo "$(dirname "$CLI")" >> "$GITHUB_PATH"
 
+      - name: Install Sound library
+        run: |
+          mkdir -p "$HOME/sketchbook/libraries"
+          gh release download v2.4.0 --repo processing/processing-sound --pattern sound.zip --dir "$RUNNER_TEMP"
+          unzip -q "$RUNNER_TEMP/sound.zip" -d "$HOME/sketchbook/libraries"
+
       - name: Install Pathfinder library
         run: |
-          test -n "$PATHFINDER_ZIP_URL" || { echo "Set the PATHFINDER_ZIP_URL repository variable"; exit 1; }
           mkdir -p "$HOME/sketchbook/libraries"
           curl -fsSL "$PATHFINDER_ZIP_URL" -o "$RUNNER_TEMP/pathfinder.zip"
           unzip -q "$RUNNER_TEMP/pathfinder.zip" -d "$HOME/sketchbook/libraries"

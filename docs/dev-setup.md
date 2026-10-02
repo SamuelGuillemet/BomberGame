@@ -7,7 +7,7 @@
 | Processing | 4.x (3.5.4+ should work; the code uses `push()` / `pop()`) | Bundles its own JDK, no separate Java needed |
 | Library *Sound* | any recent | `processing.sound`: audio playback |
 | Library *Network* | built in | `processing.net` |
-| Library *Pathfinder* | any recent | `pathfinder.*` by Peter Lager: `Graph`, `GraphNode`, `GraphSearch_Astar`, `AshCrowFlight` |
+| Library *Pathfinder* | V1.0.1 | Manual install from SourceForge (`pathfinder4processing`); provides `pathfinder.*` by Peter Lager: `Graph`, `GraphNode`, `GraphSearch_Astar`, `AshCrowFlight` |
 | Git | any | to clone |
 
 Optional: VS Code with a Java extension (the workspace has `.vscode/settings.json` with
@@ -26,7 +26,10 @@ The repository is large because of `data/` (about 250 MB).
 ## Run in the Processing IDE
 
 1. Open Processing, then File > Open > `BomberGame.pde`.
-2. Sketch > Import Library > Manage Libraries, install **Sound** and **Pathfinder**.
+2. Sketch > Import Library > Manage Libraries, install **Sound**. Install **Pathfinder** manually (it is not in the
+   Library Manager): download `Path_Finder V1.0.1.zip` from
+   [SourceForge](https://sourceforge.net/projects/pathfinder4processing/files/) and unzip it into the sketchbook
+   `libraries/` folder (`~/sketchbook/libraries` on Linux, `Documents/Processing/libraries` on Windows/macOS).
 3. Press **Run** (or `Ctrl+R`). The 590x420 window opens on the main menu.
 
 ## Run from the command line

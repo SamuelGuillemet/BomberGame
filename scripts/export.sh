@@ -8,8 +8,13 @@ DIST="$ROOT/dist"
 STAGE="$(mktemp -d)"
 trap 'rm -rf "$STAGE"' EXIT
 
-if ! command -v processing-java >/dev/null 2>&1; then
-  echo "processing-java not found. In the PDE use Tools > Install \"processing-java\" or add the Processing folder to PATH." >&2
+# Processing 4.4+ ships `Processing cli` instead of `processing-java`.
+if command -v processing-java >/dev/null 2>&1; then
+  PROC=(processing-java)
+elif command -v Processing >/dev/null 2>&1; then
+  PROC=(Processing cli)
+else
+  echo "processing-java / Processing not found in PATH." >&2
   exit 1
 fi
 
@@ -29,7 +34,7 @@ case "$(uname -s)" in
 esac
 
 OUT="$STAGE/BomberGame-$PLATFORM"
-processing-java --sketch="$SKETCH" --output="$OUT" --force --export
+"${PROC[@]}" --sketch="$SKETCH" --output="$OUT" --force --export
 
 mkdir -p "$DIST"
 (cd "$STAGE" && zip -qr "$DIST/BomberGame-$PLATFORM.zip" "BomberGame-$PLATFORM")
