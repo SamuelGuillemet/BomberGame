@@ -28,6 +28,8 @@ dirt blocks, collect power-ups and be the last one standing.
 2. From source: install Processing 4 and the *Pathfinder* library, open `BomberGame.pde`, press Run
    (see [docs/dev-setup.md](docs/dev-setup.md)).
 3. Build the playable apps yourself: `./scripts/export.sh` (needs `processing-java` in `PATH`).
+4. Browser version (p5.js, local play only, no music): `cd p5js && python3 -m http.server`, then open
+   http://localhost:8000.
 
 ## Controls (summary)
 
@@ -51,6 +53,7 @@ TextInput_and_DrawSlider.pde   UI widgets
 Init_Images_and_savePara.pde   asset loading, settings saving
 data/                          images, fonts, sounds, Settings.txt (about 250 MB, mostly music)
 docs/                          documentation
+p5js/                          browser port (p5.js): index.html, js/, assets/
 scripts/export.sh              local build of the playable apps
 .github/workflows/release.yml  CI build and release of the playable apps
 ```

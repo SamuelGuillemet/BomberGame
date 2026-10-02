@@ -45,5 +45,6 @@ Alternative in the IDE: File > Export Application.
   GitHub release assets are limited to 2 GiB each; the repository files themselves must stay below 100 MB each.
 - The first run may show a Java or OS security warning for unsigned applications (macOS Gatekeeper, Windows SmartScreen).
 - Network play needs TCP port 5204 reachable between machines (firewall, router).
-- A browser version would require porting the game to p5.js or Processing.js; this is not provided
-  (see [limitations.md](limitations.md#ideas-for-improvement)).
+- A browser port lives in [p5js/](../p5js/index.html): serve the folder over HTTP (for example
+  `python3 -m http.server` inside `p5js/`) and open it. It supports 1 vs 1 and 1 vs IA on one machine;
+  music and network play are not included, and settings are stored in the browser `localStorage`.
