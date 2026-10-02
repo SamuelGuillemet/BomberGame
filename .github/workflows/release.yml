@@ -1,0 +1,46 @@
+name: Build playable version
+
+# Builds the Linux application and attaches it to a GitHub Release when a tag `v*` is pushed.
+# Required repository variable: PATHFINDER_ZIP_URL (direct link to the Pathfinder library zip).
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PATHFINDER_ZIP_URL: ${{ vars.PATHFINDER_ZIP_URL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Processing 4 (latest release)
+        run: |
+          gh release download --repo processing/processing4 --pattern "*linux-x64.tgz" --dir "$RUNNER_TEMP"
+          mkdir -p "$HOME/processing"
+          tar -xzf "$RUNNER_TEMP"/processing-*-linux-x64.tgz -C "$HOME/processing" --strip-components=1
+          echo "$HOME/processing" >> "$GITHUB_PATH"
+
+      - name: Install Pathfinder library
+        run: |
+          test -n "$PATHFINDER_ZIP_URL" || { echo "Set the PATHFINDER_ZIP_URL repository variable"; exit 1; }
+          mkdir -p "$HOME/sketchbook/libraries"
+          curl -fsSL "$PATHFINDER_ZIP_URL" -o "$RUNNER_TEMP/pathfinder.zip"
+          unzip -q "$RUNNER_TEMP/pathfinder.zip" -d "$HOME/sketchbook/libraries"
+
+      - name: Export application
+        run: ./scripts/export.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BomberGame-linux
+          path: dist/BomberGame-linux.zip
+
+      - name: Attach to the release
+        if: startsWith(github.ref, 'refs/tags/')
+        run: gh release create "$GITHUB_REF_NAME" dist/BomberGame-linux.zip --generate-notes || gh release upload "$GITHUB_REF_NAME" dist/BomberGame-linux.zip --clobber

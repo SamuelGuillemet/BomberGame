@@ -19,7 +19,7 @@ class Bomb {
         timeToExplosion = int(difficulty);
     }
     
-    voidexplosion() {
+    void explosion() {
         generateDanger();
         if (tiles[(int) pos.y][(int) pos.x].expl == true && !explode) time -= time + timeToExplosion - temp;
         if (temp >= time + timeToExplosion) {
@@ -39,7 +39,7 @@ class Bomb {
     
     void drawexplosion() {
         
-        for (intk = 1; k <= flame; k++) {
+        for (int k = 1; k <= flame; k++) {
             int Y = (int) pos.y + k;
             int X = (int) pos.x;
             if (Y < map.length) {
@@ -60,7 +60,7 @@ class Bomb {
             }
         }
         
-        for (intk = 1; k <= flame; k++) {
+        for (int k = 1; k <= flame; k++) {
             int Y = (int) pos.y - k;
             int X = (int) pos.x;
             if (Y >= 0) {
@@ -81,7 +81,7 @@ class Bomb {
             }
         }
         
-        for (intk = 1; k <= flame; k++) {
+        for (int k = 1; k <= flame; k++) {
             int Y = (int) pos.y;
             int X = (int) pos.x - k;
             if (X >= 0) {
@@ -102,7 +102,7 @@ class Bomb {
             }
         }
         
-        for (intk = 1; k <= flame; k++) {
+        for (int k = 1; k <= flame; k++) {
             int Y = (int) pos.y;
             int X = (int) pos.x + k;
             if (X < map.length) {

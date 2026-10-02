@@ -16,7 +16,7 @@ class PlayerIA {
         player = aPlayer;
     }
     
-    voidshow() {
+    void show() {
         r = rNodes;
         if (r.length > 1) nextTile = coordToTile(r[1].xf(), r[1].yf());
         currentTile[1] = player.getPosition()[0];
@@ -76,7 +76,7 @@ class PlayerIA {
         ArrayList<Tile> TileTest = new ArrayList<Tile>();
         ArrayList<Tile> TileTestBis = new ArrayList<Tile>();
         boolean safePlaceFound = false;
-        TilesafeTile = new Tile();
+        Tile safeTile = new Tile();
         TileTest.clear();
         TileTest.add(tiles[Y][X]);
         
@@ -88,7 +88,7 @@ class PlayerIA {
                 break;
             }
             TileTestBis.clear();
-            for (intk = 0; k < TileTest.size(); k++) {
+            for (int k = 0; k < TileTest.size(); k++) {
                 int aX = TileTest.get(k).i;
                 int aY = TileTest.get(k).j;
                 if (tiles[aY][aX].safe) {
@@ -103,7 +103,7 @@ class PlayerIA {
                 if (!tiles[aY - 1][aX].expl && !tiles[aY - 1][aX].death && !tiles[aY - 1][aX].bomb && !tiles[aY - 1][aX].wall && !tiles[aY - 1][aX].dirt && !(aY - 1 == Player1.getPosition()[0] && aX == Player1.getPosition()[1])) TileTestBis.add(tiles[aY - 1][aX]);
             }
             TileTest.clear();
-            for (intk = 0; k < TileTestBis.size(); k++) {
+            for (int k = 0; k < TileTestBis.size(); k++) {
                 TileTest.add(TileTestBis.get(k));
             }
         }
@@ -118,8 +118,8 @@ class PlayerIA {
         int X = pos[0];
         int Y = pos[1];
         
-        for (intx =-  1; x <=  1; x++) {
-            for (inty =-  1; y <=  1; y++) {
+        for (int x = -1; x <=  1; x++) {
+            for (int y = -1; y <=  1; y++) {
                 if (x ==  x + y || y == x + y) {
                     if (tiles[Y + y][X + x].safe && tiles[Y + y][X + x].powerUp()) {
                         Player2.move(new PVector(x * largeurCase, y * largeurCase));

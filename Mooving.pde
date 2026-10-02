@@ -27,7 +27,7 @@ void keyPressed() {
                     if (key == 'q' || key == 'Q') Player1.move(new PVector( -largeurCase, 0));
                     if (key == 'z' || key == 'Z') Player1.move(new PVector(0, -largeurCase));
                     if (key == 's' || key == 'S') Player1.move(new PVector(0, largeurCase));
-                    if (key == '') Player1.PosBomb();
+                    if (key == ' ') Player1.PosBomb();
                 }
                 
                 if ((!networkON | waitingClient) && !IAPlaying) {
@@ -51,7 +51,7 @@ void keyPressed() {
                     if (key == 'q' || key == 'Q') server.write("-9-2-");
                     if (key == 'z' || key == 'Z') server.write("-9-3-");
                     if (key == 's' || key == 'S') server.write("-9-4-");
-                    if (key == '') server.write("-9-5-");
+                    if (key == ' ') server.write("-9-5-");
                 }
             }
             break;
